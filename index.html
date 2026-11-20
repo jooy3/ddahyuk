@@ -15,10 +15,11 @@
 <body>
   <!-- Header / Navigation: GNB 좌측 상단 필기체 로고 + 1depth 메뉴 -->
   <header class="header">
-    <a href="#" class="brand-logo" id="homeLogo" title="Home으로 이동">Ddahyuk</a>
+    <a href="#" class="brand-logo" id="homeLogo" title="Home으로 이동">DDahyuk</a>
     
     <nav class="gnb-nav">
       <ul class="gnb-list">
+        <li><a href="#home" class="gnb-link active" data-target="home">MAIN</a></li>
         <li><a href="#career" class="gnb-link" data-target="career">CAREER</a></li>
         <li><a href="#statistics" class="gnb-link" data-target="statistics">STATISTICS</a></li>
         <li><a href="#videos" class="gnb-link" data-target="videos">VIDEOS</a></li>
@@ -34,60 +35,158 @@
     <!-- 1. HOME VIEW (기본 프로필 화면) -->
     <section class="page-view active" id="view-home">
       <div class="profile-layout">
-        <!-- 좌측: 프로필 사진 -->
+        <!-- 좌측: 프로필 사진 및 롤 전적 바로가기 카드 -->
         <div class="profile-left">
           <div class="avatar-frame">
             <img 
-              src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80" 
-              alt="Ddahyuk 프로필 사진" 
+              src="profile.png" 
+              alt="DDahyuk 안민혁 프로필 사진" 
               class="avatar-img" 
               id="profileImg"
               onerror="this.onerror=null; this.src='profile_placeholder.svg';"
             >
           </div>
-        </div>
 
-        <!-- 우측: 텍스트 정보 (볼드체 라벨 + Signature Champions 기준 줄맞춤) -->
-        <div class="profile-right">
-          <div class="info-list">
-            <div class="info-row">
-              <span class="info-label">Name</span>
-              <span class="info-value">DDahyuk 안민혁</span>
-            </div>
+          <!-- 롤 전적 바로가기 링크 카드 목록 -->
+          <div class="fow-link-card-list">
+            <a href="https://www.fow.lol/find/kr/%EC%9D%B4%EC%A7%81%EB%A1%9C%EA%B7%B8-0904" target="_blank" rel="noopener noreferrer" class="fow-link-card" title="이직로그#0904 전적 보기">
+              <div class="fow-card-left">
+                <i class="fa-solid fa-gamepad fow-icon"></i>
+                <span class="fow-account-name">이직로그#0904</span>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square fow-arrow"></i>
+            </a>
 
-            <div class="info-row">
-              <span class="info-label">Birth</span>
-              <span class="info-value">2004.09.04</span>
-            </div>
+            <a href="https://www.fow.lol/find/kr/%EB%84%88%EB%8D%9C%EB%84%88%EB%8D%9C-NDND" target="_blank" rel="noopener noreferrer" class="fow-link-card" title="너덜너덜#NDND 전적 보기">
+              <div class="fow-card-left">
+                <i class="fa-solid fa-gamepad fow-icon"></i>
+                <span class="fow-account-name">너덜너덜#NDND</span>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square fow-arrow"></i>
+            </a>
 
-            <div class="info-row">
-              <span class="info-label">Position</span>
-              <span class="info-value">TOP</span>
-            </div>
-
-            <div class="info-row">
-              <span class="info-label">Signature Champions</span>
-              <span class="info-value">Fiora, Vayne</span>
-            </div>
-
-            <div class="info-row">
-              <span class="info-label">Peak Rank</span>
-              <span class="info-value">Challenger 2,371 LP</span>
-            </div>
+            <a href="https://www.fow.lol/find/kr/%ED%95%98%EC%99%80%EC%99%80-0904" target="_blank" rel="noopener noreferrer" class="fow-link-card" title="하와와#0904 전적 보기">
+              <div class="fow-card-left">
+                <i class="fa-solid fa-gamepad fow-icon"></i>
+                <span class="fow-account-name">하와와#0904</span>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square fow-arrow"></i>
+            </a>
           </div>
 
-          <!-- 하단: 인스타그램 & Soop 아이콘 -->
+          <!-- 좌측 하단: 인스타그램 & Soop 아이콘 -->
           <div class="social-icons">
             <a href="https://www.instagram.com/ddahyukk" target="_blank" rel="noopener noreferrer" class="icon-link instagram-link" title="Instagram (@ddahyukk)">
               <i class="fa-brands fa-instagram"></i>
             </a>
 
             <a href="https://www.sooplive.com/station/minhyuk0904" target="_blank" rel="noopener noreferrer" class="icon-link soop-link" title="SOOP Live (minhyuk0904)">
-              <svg class="soop-svg-icon" viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
-                <path d="M12 2C6.48 2 2 6.48 2 12c0 2.22.73 4.27 1.96 5.93l-1.68 3.53a.75.75 0 0 0 .97.97l3.53-1.68A9.96 9.96 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.93 0-3.7-.68-5.08-1.82a.75.75 0 0 0-.6-.16l-2.48 1.18 1.18-2.48a.75.75 0 0 0-.16-.6A7.95 7.95 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8zm-1-12h2v4h-2zm0 6h2v2h-2z"/>
+              <svg class="soop-svg-icon" viewBox="0 0 100 100" fill="currentColor" width="28" height="28">
+                <!-- SOOP 공식 뫼비우스 인피니티 루프 심볼 형태 -->
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M30 25C16.19 25 5 36.19 5 50C5 63.81 16.19 75 30 75C38.6 75 46.16 70.67 50.6 64.08C55.04 70.67 62.6 75 71.2 75C85.01 75 96.2 63.81 96.2 50C96.2 36.19 85.01 25 71.2 25C62.6 25 55.04 29.33 50.6 35.92C46.16 29.33 38.6 25 30 25ZM30 39C23.92 39 19 43.92 19 50C19 56.08 23.92 61 30 61C36.08 61 41 56.08 41 50C41 43.92 36.08 39 30 39ZM71.2 39C65.12 39 60.2 43.92 60.2 50C60.2 56.08 65.12 61 71.2 61C77.28 61 82.2 56.08 82.2 50C82.2 43.92 77.28 39 71.2 39Z"/>
               </svg>
             </a>
           </div>
+        </div>
+
+        <!-- 우측: 프로필 정보 카드 & PERSONAL BEST 카드 -->
+        <div class="profile-right">
+          <!-- 1. PROFILE INFORMATION 카드 -->
+          <div class="profile-info-card">
+            <div class="profile-card-header">
+              <span class="profile-card-title"><i class="fa-solid fa-id-card"></i> PROFILE INFORMATION</span>
+            </div>
+            <div class="info-list">
+              <div class="info-row">
+                <span class="info-label">Name</span>
+                <span class="info-value highlight-accent">DDahyuk 안민혁</span>
+              </div>
+
+              <div class="info-row">
+                <span class="info-label">Birth</span>
+                <span class="info-value">2004.09.04</span>
+              </div>
+
+              <div class="info-row">
+                <span class="info-label">Position</span>
+                <span class="info-value highlight-accent">TOP</span>
+              </div>
+
+              <div class="info-row">
+                <span class="info-label">Signature Champions</span>
+                <span class="info-value">Fiora, Vayne</span>
+              </div>
+
+              <div class="info-row">
+                <span class="info-label">Peak Rank</span>
+                <span class="info-value">Challenger 2,371 LP</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. PERSONAL BEST 카드 -->
+          <div class="personal-best-card">
+            <div class="personal-best-header">
+              <span class="pb-title-icon"><i class="fa-solid fa-chart-line"></i> PERSONAL BEST</span>
+            </div>
+            <div class="personal-best-body">
+              <div class="pb-item">
+                <div class="pb-item-left">
+                  <img src="https://ddragon.leagueoflegends.com/cdn/14.23.1/img/champion/Renekton.png" alt="Renekton" class="pb-champ-icon" onerror="this.onerror=null; this.src='profile_placeholder.svg';">
+                  <div class="pb-info-col">
+                    <span class="pb-label">KDA</span>
+                    <span class="pb-match">BRO vs BFX</span>
+                  </div>
+                </div>
+                <span class="pb-stat">10/0/10</span>
+              </div>
+
+              <div class="pb-item">
+                <div class="pb-item-left">
+                  <img src="https://ddragon.leagueoflegends.com/cdn/14.23.1/img/champion/Camille.png" alt="Camille" class="pb-champ-icon" onerror="this.onerror=null; this.src='profile_placeholder.svg';">
+                  <div class="pb-info-col">
+                    <span class="pb-label">DPM</span>
+                    <span class="pb-match">DNF vs BRO</span>
+                  </div>
+                </div>
+                <span class="pb-stat">1,133</span>
+              </div>
+
+              <div class="pb-item">
+                <div class="pb-item-left">
+                  <img src="https://ddragon.leagueoflegends.com/cdn/14.23.1/img/champion/Gwen.png" alt="Gwen" class="pb-champ-icon" onerror="this.onerror=null; this.src='profile_placeholder.svg';">
+                  <div class="pb-info-col">
+                    <span class="pb-label">CSD@15</span>
+                    <span class="pb-match">LSB vs DK</span>
+                  </div>
+                </div>
+                <span class="pb-stat pb-stat-green">+50</span>
+              </div>
+
+              <div class="pb-item">
+                <div class="pb-item-left">
+                  <img src="https://ddragon.leagueoflegends.com/cdn/14.23.1/img/champion/Jayce.png" alt="Jayce" class="pb-champ-icon" onerror="this.onerror=null; this.src='profile_placeholder.svg';">
+                  <div class="pb-info-col">
+                    <span class="pb-label">CSM</span>
+                    <span class="pb-match">BRO vs KRX</span>
+                  </div>
+                </div>
+                <span class="pb-stat">10.9</span>
+              </div>
+
+              <div class="pb-item pb-item-full">
+                <div class="pb-item-left">
+                  <img src="https://ddragon.leagueoflegends.com/cdn/14.23.1/img/champion/Gnar.png" alt="Gnar" class="pb-champ-icon" onerror="this.onerror=null; this.src='profile_placeholder.svg';">
+                  <div class="pb-info-col">
+                    <span class="pb-label">VSPM</span>
+                    <span class="pb-match">DNS vs BRO</span>
+                  </div>
+                </div>
+                <span class="pb-stat">1.9</span>
+              </div>
+            </div>
+          </div>
+        </div>
         </div>
       </div>
     </section>
@@ -98,26 +197,106 @@
         <h2 class="subpage-title">CAREER</h2>
         <p class="subpage-desc">팀 커리어 히스토리입니다.</p>
       </div>
-      <div class="timeline-list">
-        <div class="timeline-item">
-          <span class="timeline-year">2023 - 2024</span>
-          <div class="timeline-content">
-            <h3>HANJIN BRION Challengers (BRO.C)</h3>
-            <p>LCK Challengers League 탑 라이너</p>
+
+      <div class="career-sections-container">
+        <!-- 1행: 좌측 Team History, 우측 Awards (2열 배치) -->
+        <div class="career-top-row">
+          <!-- 1) Team History (좌측) -->
+          <div class="career-block career-block-team">
+            <div class="career-block-header">
+              <h3 class="career-block-title title-team">
+                <i class="fa-solid fa-users"></i> Team History
+              </h3>
+            </div>
+            <div class="timeline-list">
+              <div class="timeline-item">
+                <span class="timeline-year">2025.04. - 2026.11.</span>
+                <div class="timeline-content">
+                  <h3>BRO Challengers</h3>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <span class="timeline-year">2024.07. - 2024.08.</span>
+                <div class="timeline-content">
+                  <h3>NS Academy</h3>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <span class="timeline-year">2022.12. - 2023.11.</span>
+                <div class="timeline-content">
+                  <h3>LSB Youth</h3>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <span class="timeline-year">2022.08.</span>
+                <div class="timeline-content">
+                  <h3>KeG Busan</h3>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <span class="timeline-year">2021.03. - 2022.12.</span>
+                <div class="timeline-content">
+                  <h3>LSB Academy</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2) Awards (우측) -->
+          <div class="career-block career-block-awards">
+            <div class="career-block-header">
+              <h3 class="career-block-title title-awards">
+                <i class="fa-solid fa-trophy"></i> Awards
+              </h3>
+            </div>
+            <div class="record-groups-list">
+              <div class="record-group">
+                <span class="record-year-badge badge-awards">2022</span>
+                <ul class="record-items">
+                  <li>
+                    <div class="award-text">2022 LCK Academy Series 9월 오픈 토너먼트 우승</div>
+                    <span class="record-team team-subline">(LSB Academy)</span>
+                  </li>
+                  <li>
+                    <div class="award-text">2022 LCK Academy Series 6월 오픈 토너먼트 준우승</div>
+                    <span class="record-team team-subline">(LSB Academy)</span>
+                  </li>
+                  <li>
+                    <span class="award-text">KeG Championship 2022 준우승</span>
+                    <span class="record-team">(KeG Busan)</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="record-group">
+                <span class="record-year-badge badge-awards">2021</span>
+                <ul class="record-items">
+                  <li>2021 LoL THE NEXT 준우승 <span class="record-team">(Team C)</span></li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="timeline-item">
-          <span class="timeline-year">2022 - 2023</span>
-          <div class="timeline-content">
-            <h3>DRX Academy</h3>
-            <p>LCK Academy Series 탑 라이너</p>
+
+        <!-- 2행: 하단 Events Match (다음 줄) -->
+        <div class="career-block career-block-events">
+          <div class="career-block-header">
+            <h3 class="career-block-title title-events">
+              <i class="fa-solid fa-gamepad"></i> Events Match
+            </h3>
           </div>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-year">2021 - 2022</span>
-          <div class="timeline-content">
-            <h3>Liiv SANDBOX Youth / Academy</h3>
-            <p>아카데미 토너먼트 활약 및 유망주 육성</p>
+          <div class="record-groups-list events-grid-list">
+            <div class="record-group">
+              <span class="record-year-badge badge-events">2025</span>
+              <ul class="record-items">
+                <li>2025 LoL 멸망전 시즌1 4강 <span class="record-team">(무지성거인)</span></li>
+              </ul>
+            </div>
+            <div class="record-group">
+              <span class="record-year-badge badge-events">2024</span>
+              <ul class="record-items">
+                <li>2024 LoL 멸망전 시즌1 8강 <span class="record-team">(너덜너덜)</span></li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -127,65 +306,167 @@
     <section class="page-view" id="view-statistics">
       <div class="subpage-header">
         <h2 class="subpage-title">STATISTICS</h2>
-        <p class="subpage-desc">LCK CL 데이터 지표입니다. (출처: Games of Legends)</p>
+        <p class="subpage-desc">LCK CL 데이터 지표입니다. (Cr : Games of Legends)</p>
       </div>
 
-      <!-- 상단 필터 카드 영역 -->
-      <div class="stats-filter-card">
-        <!-- 1. Season 필터 (ALL, 2023, 2025, 2026 / ALL 선택시 해제, 다중 선택 가능) -->
-        <div class="filter-group">
-          <label class="filter-label"><i class="fa-solid fa-calendar-days"></i> Season</label>
-          <div class="season-btn-group" id="seasonFilterGroup">
-            <button type="button" class="season-filter-btn active" data-season="ALL">ALL</button>
-            <button type="button" class="season-filter-btn" data-season="2023">2023 (S13)</button>
-            <button type="button" class="season-filter-btn" data-season="2025">2025 (S15)</button>
-            <button type="button" class="season-filter-btn" data-season="2026">2026 (S16)</button>
+      <!-- Statistics 상단 탭 (Summary / Match Result) 및 우측 gol.gg 바로가기 아이콘 -->
+      <div class="stats-header-bar">
+        <div class="stats-tabs">
+          <button type="button" class="stats-tab active" data-stats-tab="summary">Summary</button>
+          <button type="button" class="stats-tab" data-stats-tab="match-result">Match Result</button>
+        </div>
+        <a href="https://gol.gg/players/player-stats/4941/season-ALL/split-ALL/tournament-ALL/" target="_blank" rel="noopener noreferrer" class="gol-shortcut-btn" title="Games of Legends (gol.gg) 바로가기">
+          <span class="gol-badge-text">gol.gg</span>
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+      </div>
+
+      <!-- 1) Summary 탭 콘텐츠 -->
+      <div class="stats-tab-content active" id="statsTabContent-summary">
+        <!-- 상단 필터 카드 영역 -->
+        <div class="stats-filter-card">
+          <!-- 1. Season 필터 (한줄 배치) -->
+          <div class="filter-group filter-group-season">
+            <label class="filter-label"><i class="fa-solid fa-calendar-days"></i> Season</label>
+            <div class="season-btn-group" id="seasonFilterGroup">
+              <button type="button" class="season-filter-btn active" data-season="ALL">ALL</button>
+              <button type="button" class="season-filter-btn" data-season="2023">2023 (S13)</button>
+              <button type="button" class="season-filter-btn" data-season="2025">2025 (S15)</button>
+              <button type="button" class="season-filter-btn" data-season="2026">2026 (S16)</button>
+            </div>
+          </div>
+
+          <!-- 2. Tournament 필터 (드롭다운 단일 선택) -->
+          <div class="filter-group filter-group-select">
+            <label class="filter-label" for="tournamentFilterSelect"><i class="fa-solid fa-trophy"></i> Tournament</label>
+            <div class="custom-select-wrapper">
+              <select id="tournamentFilterSelect" class="tournament-select">
+                <option value="ALL">ALL (전체 토너먼트)</option>
+                <option value="LCK CL 2026 Rounds 3-4">LCK CL 2026 Rounds 3-4</option>
+                <option value="LCK CL 2026 Rounds 1-2">LCK CL 2026 Rounds 1-2</option>
+                <option value="LCK CL 2026 Kickoff">LCK CL 2026 Kickoff</option>
+                <option value="LCK CL 2025 Rounds 3-5">LCK CL 2025 Rounds 3-5</option>
+                <option value="LCK CL 2025 Rounds 1-2">LCK CL 2025 Rounds 1-2</option>
+                <option value="LCK CL Summer 2023">LCK CL Summer 2023</option>
+                <option value="LCK CL 2023 Spring">LCK CL 2023 Spring</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 3. Champion 필터 (드롭다운 알파벳 순서 정렬) -->
+          <div class="filter-group filter-group-select">
+            <label class="filter-label" for="championFilterSelect"><i class="fa-solid fa-shield-halved"></i> Champion</label>
+            <div class="custom-select-wrapper">
+              <select id="championFilterSelect" class="tournament-select">
+                <option value="ALL">ALL (전체 챔피언)</option>
+              </select>
+            </div>
           </div>
         </div>
 
-        <!-- 2. Tournament 필터 (드롭다운 단일 선택) -->
-        <div class="filter-group">
-          <label class="filter-label" for="tournamentFilterSelect"><i class="fa-solid fa-trophy"></i> Tournament</label>
-          <div class="custom-select-wrapper">
-            <select id="tournamentFilterSelect" class="tournament-select">
-              <option value="ALL">ALL (전체 토너먼트)</option>
-              <option value="LCK CL 2026 Rounds 3-4">LCK CL 2026 Rounds 3-4</option>
-              <option value="LCK CL 2026 Rounds 1-2">LCK CL 2026 Rounds 1-2</option>
-              <option value="LCK CL 2026 Kickoff">LCK CL 2026 Kickoff</option>
-              <option value="LCK CL 2025 Rounds 3-5">LCK CL 2025 Rounds 3-5</option>
-              <option value="LCK CL 2025 Rounds 1-2">LCK CL 2025 Rounds 1-2</option>
-              <option value="LCK CL Summer 2023">LCK CL Summer 2023</option>
-              <option value="LCK CL 2023 Spring">LCK CL 2023 Spring</option>
-            </select>
+        <!-- 필터 적용 상태 요약 및 핵심 지표 그리드 -->
+        <div class="stats-overview-grid" id="statsOverviewGrid">
+          <!-- JS로 동적 렌더링 -->
+        </div>
+
+        <!-- 챔피언별 상세 통계 리스트 테이블 -->
+        <div class="stats-table-card">
+          <div class="table-header-title">
+            <h3><i class="fa-solid fa-shield-halved"></i> Champion Pool Statistics</h3>
+            <span class="active-filter-badge" id="activeFilterBadge">Season: ALL</span>
+          </div>
+          <div class="table-responsive">
+            <table class="stats-data-table">
+              <thead>
+                <tr>
+                  <th class="text-left">Champion</th>
+                  <th class="text-center">Games</th>
+                  <th class="text-center">Win Rate</th>
+                  <th class="text-center">KDA</th>
+                </tr>
+              </thead>
+              <tbody id="championStatsTbody">
+                <!-- JS로 동적 렌더링 -->
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
 
-      <!-- 필터 적용 상태 요약 및 핵심 지표 그리드 -->
-      <div class="stats-overview-grid" id="statsOverviewGrid">
-        <!-- JS로 동적 렌더링 -->
-      </div>
+      <!-- 2) Match Result 탭 콘텐츠 -->
+      <div class="stats-tab-content" id="statsTabContent-match-result">
+        <!-- Summary 탭과 동일한 필터 카드 영역 -->
+        <div class="stats-filter-card">
+          <!-- 1. Season 필터 (한줄 배치) -->
+          <div class="filter-group filter-group-season">
+            <label class="filter-label"><i class="fa-solid fa-calendar-days"></i> Season</label>
+            <div class="season-btn-group" id="matchSeasonFilterGroup">
+              <button type="button" class="season-filter-btn active" data-season="ALL">ALL</button>
+              <button type="button" class="season-filter-btn" data-season="2023">2023 (S13)</button>
+              <button type="button" class="season-filter-btn" data-season="2025">2025 (S15)</button>
+              <button type="button" class="season-filter-btn" data-season="2026">2026 (S16)</button>
+            </div>
+          </div>
 
-      <!-- 챔피언별 상세 통계 리스트 테이블 -->
-      <div class="stats-table-card">
-        <div class="table-header-title">
-          <h3><i class="fa-solid fa-shield-halved"></i> Champion Pool Statistics</h3>
-          <span class="active-filter-badge" id="activeFilterBadge">Season: ALL</span>
+          <!-- 2. Tournament 필터 -->
+          <div class="filter-group filter-group-select">
+            <label class="filter-label" for="matchTournamentFilterSelect"><i class="fa-solid fa-trophy"></i> Tournament</label>
+            <div class="custom-select-wrapper">
+              <select id="matchTournamentFilterSelect" class="tournament-select">
+                <option value="ALL">ALL (전체 토너먼트)</option>
+                <option value="LCK CL 2026 Rounds 3-4">LCK CL 2026 Rounds 3-4</option>
+                <option value="LCK CL 2026 Rounds 1-2">LCK CL 2026 Rounds 1-2</option>
+                <option value="LCK CL 2026 Kickoff">LCK CL 2026 Kickoff</option>
+                <option value="LCK CL 2025 Rounds 3-5">LCK CL 2025 Rounds 3-5</option>
+                <option value="LCK CL 2025 Rounds 1-2">LCK CL 2025 Rounds 1-2</option>
+                <option value="LCK CL Summer 2023">LCK CL Summer 2023</option>
+                <option value="LCK CL 2023 Spring">LCK CL 2023 Spring</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 3. Champion 필터 -->
+          <div class="filter-group filter-group-select">
+            <label class="filter-label" for="matchChampionFilterSelect"><i class="fa-solid fa-shield-halved"></i> Champion</label>
+            <div class="custom-select-wrapper">
+              <select id="matchChampionFilterSelect" class="tournament-select">
+                <option value="ALL">ALL (전체 챔피언)</option>
+              </select>
+            </div>
+          </div>
         </div>
-        <div class="table-responsive">
-          <table class="stats-data-table">
-            <thead>
-              <tr>
-                <th class="text-left">Champion</th>
-                <th class="text-center">Games</th>
-                <th class="text-center">Win Rate</th>
-                <th class="text-center">KDA</th>
-              </tr>
-            </thead>
-            <tbody id="championStatsTbody">
-              <!-- JS로 동적 렌더링 -->
-            </tbody>
-          </table>
+
+        <!-- Last 200 games 섹션 및 경기 목록 테이블 -->
+        <div class="stats-table-card match-list-table-card">
+          <div class="table-header-title">
+            <div class="match-list-header-left">
+              <h3 style="margin-bottom: 0.25rem;"><i class="fa-solid fa-clock-rotate-left"></i> Last 200 games</h3>
+              <p class="match-list-subdesc">LCK CL 매치 전적 데이터입니다.</p>
+            </div>
+            <span class="active-filter-badge" id="matchActiveFilterBadge">Matches: 200 Games</span>
+          </div>
+
+          <div class="table-responsive">
+            <table class="stats-data-table match-data-table">
+              <thead>
+                <tr>
+                  <th class="text-left">Champion</th>
+                  <th class="text-center">Result</th>
+                  <th class="text-center">KDA</th>
+                  <th class="text-center">Game</th>
+                  <th class="text-center">Tournament</th>
+                  <th class="text-center">Duration</th>
+                  <th class="text-center">CSM</th>
+                  <th class="text-center">DPM</th>
+                  <th class="text-center">KP%</th>
+                  <th class="text-center">Date</th>
+                </tr>
+              </thead>
+              <tbody id="matchListTbody">
+                <!-- JS로 동적 렌더링 -->
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
@@ -301,14 +582,14 @@
       <div class="contact-box">
         <div class="contact-row">
           <span class="contact-label">Email</span>
-          <span class="contact-val"><a href="mailto:contact@ddahyuk.pro">contact@ddahyuk.pro</a></span>
+          <span class="contact-val"><a href="mailto:ddahyuklol@gmail.com">ddahyuklol@gmail.com</a></span>
         </div>
         <div class="contact-row">
           <span class="contact-label">Instagram DM</span>
           <span class="contact-val"><a href="https://www.instagram.com/ddahyukk" target="_blank" rel="noopener noreferrer">@ddahyukk</a></span>
         </div>
         <div class="contact-row">
-          <span class="contact-label">SOOP Station</span>
+          <span class="contact-label">SOOP</span>
           <span class="contact-val"><a href="https://www.sooplive.com/station/minhyuk0904" target="_blank" rel="noopener noreferrer">sooplive.com/station/minhyuk0904</a></span>
         </div>
       </div>
@@ -316,9 +597,10 @@
 
   </main>
 
-  <script src="stats_data.js"></script>
-  <script src="news_data.js"></script>
-  <script src="video_data.js"></script>
-  <script src="script.js"></script>
+  <script src="stats_data.js?v=20261119_2"></script>
+  <script src="match_data.js?v=20261120_1"></script>
+  <script src="news_data.js?v=20261119_2"></script>
+  <script src="video_data.js?v=20261119_2"></script>
+  <script src="script.js?v=20261119_2"></script>
 </body>
 </html>

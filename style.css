@@ -106,7 +106,7 @@ body {
   align-items: flex-start; /* 상단 정렬로 통일하여 여백 일치 */
   justify-content: center;
   padding: 5rem 4rem 4rem 4rem; /* 상단 여백을 균형 있게 5rem으로 확대 */
-  max-width: 1200px;
+  max-width: 1360px;
   margin: 0 auto;
   width: 100%;
 }
@@ -138,20 +138,24 @@ body {
    ========================================= */
 .profile-layout {
   display: flex;
-  align-items: flex-start; /* 프로필 사진과 정보 상단 라인 정렬 */
+  align-items: stretch; /* 좌우 영역의 바닥 라인을 완벽히 일치시키도록 스트레치 */
   justify-content: center;
-  gap: 5rem;
+  gap: 6rem;
   width: 100%;
 }
 
 .profile-left {
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* 좌측 영역 항목 간 간격을 1.5rem으로 늘려 답답함 해소 */
+  width: 340px;
 }
 
 .avatar-frame {
-  width: 320px;
-  height: 400px;
-  border-radius: 20px;
+  width: 340px;
+  height: 425px;
+  border-radius: 22px;
   overflow: hidden;
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
   background-color: #121c29;
@@ -171,39 +175,285 @@ body {
   display: block;
 }
 
+/* =========================================
+   롤 전적 바로가기 카드 (좌측 프로필 사진 하단)
+   ========================================= */
+.fow-link-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem; /* 카드들 사이 간격도 약간 확대 */
+  width: 100%;
+}
+
+.fow-link-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.3rem;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  text-decoration: none;
+  color: #e2e8f0;
+  backdrop-filter: blur(10px);
+  transition: var(--transition);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.fow-link-card:hover {
+  background: rgba(0, 229, 255, 0.06);
+  border-color: rgba(0, 229, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35), 0 0 12px rgba(0, 229, 255, 0.15);
+  color: #ffffff;
+}
+
+.fow-card-left {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.fow-icon {
+  font-size: 1.1rem;
+  color: var(--accent-cyan);
+  transition: transform 0.2s ease;
+}
+
+.fow-link-card:hover .fow-icon {
+  transform: scale(1.1);
+}
+
+.fow-account-name {
+  font-family: 'Outfit', 'Pretendard', sans-serif;
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.fow-arrow {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.fow-link-card:hover .fow-arrow {
+  color: var(--accent-cyan);
+  transform: translate(2px, -2px);
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
 .profile-right {
   display: flex;
   flex-direction: column;
-  gap: 2.8rem;
-  justify-content: center;
+  justify-content: space-between; /* 좌측 SNS/SOOP 아이콘 바닥과 PERSONAL BEST 바닥선이 자동으로 정확히 일치 */
+  flex: 1;
+  max-width: 580px;
+}
+
+/* =========================================
+   PROFILE INFORMATION CARD (우측 상단 프로필 정보 카드)
+   ========================================= */
+.profile-info-card {
+  width: 100%;
+  max-width: 580px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  font-family: 'Outfit', 'Pretendard', sans-serif;
+  transition: var(--transition);
+}
+
+.profile-info-card:hover {
+  border-color: rgba(0, 229, 255, 0.25);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+}
+
+.profile-card-header {
+  display: flex;
+  align-items: center;
+  padding: 1.05rem 1.6rem 0.9rem 1.6rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.profile-card-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.profile-card-title i {
+  color: var(--accent-cyan);
+  font-size: 0.95rem;
 }
 
 .info-list {
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  row-gap: 1.5rem;
-  column-gap: 2.4rem;
-  align-items: baseline;
+  display: flex;
+  flex-direction: column;
+  gap: 1.55rem; /* 항목들의 세로 간격을 살짝 줄여 카드 간 간격 여유 확보 */
+  padding: 1.4rem 1.7rem;
+  width: 100%;
   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
 
 .info-row {
-  display: contents;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
 }
 
 .info-label {
   font-weight: 800;
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   color: #ffffff;
   letter-spacing: 0.3px;
   white-space: nowrap;
 }
 
 .info-value {
-  font-weight: 400;
-  font-size: 1.25rem;
+  font-weight: 500;
+  font-size: 1.2rem;
   color: #d1d9e6;
   letter-spacing: 0.2px;
+  text-align: right;
+}
+
+/* DDahyuk 안민혁 & TOP 포인트 컬러 적용 */
+.info-value.highlight-accent {
+  color: var(--accent-cyan);
+  font-weight: 800;
+  text-shadow: 0 0 14px rgba(0, 229, 255, 0.4);
+}
+
+/* =========================================
+   PERSONAL BEST CARD (심플 & 미니멀 모던 디자인)
+   ========================================= */
+.personal-best-card {
+  width: 100%;
+  max-width: 580px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  font-family: 'Outfit', 'Pretendard', sans-serif;
+  transition: var(--transition);
+}
+
+.personal-best-card:hover {
+  border-color: rgba(0, 229, 255, 0.25);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+}
+
+.personal-best-header {
+  display: flex;
+  align-items: center;
+  padding: 1.05rem 1.6rem 0.9rem 1.6rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.pb-title-icon {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.pb-title-icon i {
+  color: var(--accent-cyan);
+  font-size: 0.95rem;
+}
+
+/* 심플한 2열 그리드 */
+.personal-best-body {
+  padding: 1.4rem 1.7rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.15rem; /* 세로/가로 그리드 간격을 1.15rem으로 살짝 조정 */
+}
+
+.pb-item {
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+  padding: 0.95rem 1.15rem; /* 항목 내부 패딩을 약간 줄여 균형 유지 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: var(--transition);
+}
+
+.pb-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(0, 229, 255, 0.2);
+}
+
+.pb-item.pb-item-full {
+  grid-column: span 2;
+}
+
+.pb-item-left {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.pb-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.pb-label {
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.pb-match {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.pb-champ-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  flex-shrink: 0;
+}
+
+.pb-stat {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+  text-align: right;
+}
+
+.pb-stat-green {
+  color: #10b981;
 }
 
 .social-icons {
@@ -245,8 +495,9 @@ body {
 }
 
 .soop-svg-icon {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
+  display: block;
 }
 
 /* =========================================
@@ -282,12 +533,76 @@ body {
   color: var(--text-muted);
 }
 
-/* 2. CAREER 타임라인 */
-.timeline-list {
+/* 2. CAREER 타임라인 & 섹션 스타일 (2열 배치 + 통일된 민트 포인트 + 여유로운 간격) */
+.career-sections-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5.5rem; /* 직전 간격(5.5rem)으로 원복 */
+  width: 100%;
+}
+
+/* 1행: 좌측 Team History, 우측 Awards (2열 그리드) */
+.career-top-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem; /* 좌우 열 간격 */
+  align-items: start;
+}
+
+.career-block {
   display: flex;
   flex-direction: column;
   gap: 1.8rem;
-  border-left: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.career-block-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 0.9rem;
+}
+
+.career-block-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+/* 1) Team History 타이틀 색상: 통일된 시안/민트 (#00f0ff) */
+.title-team {
+  color: #00f0ff;
+  text-shadow: 0 0 15px rgba(0, 240, 255, 0.35);
+}
+.title-team i {
+  color: #00f0ff;
+}
+
+/* 2) Awards 타이틀 색상: Team History와 동일한 민트 (#00f0ff) */
+.title-awards {
+  color: #00f0ff;
+  text-shadow: 0 0 15px rgba(0, 240, 255, 0.35);
+}
+.title-awards i {
+  color: #00f0ff;
+}
+
+/* 3) Events Match 타이틀 색상: Team History와 동일한 민트 (#00f0ff) */
+.title-events {
+  color: #00f0ff;
+  text-shadow: 0 0 15px rgba(0, 240, 255, 0.35);
+}
+.title-events i {
+  color: #00f0ff;
+}
+
+/* Team History 타임라인 */
+.timeline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* 타임라인 항목 간 간격 확대 */
+  border-left: 2px solid rgba(0, 240, 255, 0.2);
   padding-left: 2rem;
   margin-left: 0.5rem;
 }
@@ -304,28 +619,130 @@ body {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: var(--accent-cyan);
-  box-shadow: 0 0 10px var(--accent-cyan);
+  background: #00f0ff;
+  box-shadow: 0 0 12px #00f0ff;
 }
 
 .timeline-year {
   font-family: 'Outfit', sans-serif;
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  color: var(--accent-cyan);
-  letter-spacing: 1px;
+  color: #00f0ff;
+  letter-spacing: 0.8px;
 }
 
 .timeline-content h3 {
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  margin: 0.25rem 0;
+  margin-top: 0.3rem;
   color: #ffffff;
 }
 
-.timeline-content p {
+/* Awards & Events Match 기록 그룹 */
+.record-groups-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem; /* 연도별 카드 간격 확대 */
+}
+
+/* Events Match는 2열 카드로 시원하게 확장 */
+.events-grid-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.record-group {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+  padding: 1.6rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: var(--transition);
+}
+
+.career-block-awards .record-group {
+  border-left: 3px solid rgba(0, 240, 255, 0.4);
+}
+.career-block-awards .record-group:hover {
+  background: rgba(0, 240, 255, 0.04);
+  border-color: rgba(0, 240, 255, 0.45);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.career-block-events .record-group {
+  border-left: 3px solid rgba(0, 240, 255, 0.4);
+}
+.career-block-events .record-group:hover {
+  background: rgba(0, 240, 255, 0.04);
+  border-color: rgba(0, 240, 255, 0.45);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.record-year-badge {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  display: inline-block;
+  letter-spacing: 1px;
+}
+
+.badge-awards {
+  color: #00f0ff;
+}
+
+.badge-events {
+  color: #00f0ff;
+}
+
+.record-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem; /* 각 수상/대회 항목 간격 확대 */
+}
+
+.record-items li {
+  position: relative;
+  padding-left: 1.3rem;
+  color: #e2e8f0;
+  font-size: 1.02rem;
+  line-height: 1.6;
+}
+
+.career-block-awards .record-items li::before {
+  content: '🏆';
+  position: absolute;
+  left: 0;
+  font-size: 0.85rem;
+  top: 1px;
+}
+
+.career-block-events .record-items li::before {
+  content: '⚡';
+  position: absolute;
+  left: 0;
+  font-size: 0.85rem;
+  top: 1px;
+}
+
+.record-team {
   color: var(--text-muted);
-  font-size: 1rem;
+  font-size: 0.92rem;
+  margin-left: 0.35rem;
+}
+
+.record-team.team-subline {
+  display: block;
+  margin-left: 0;
+  margin-top: 0.15rem;
+  font-size: 0.9rem;
 }
 
 /* 3. STATISTICS 그리드 */
@@ -335,24 +752,129 @@ body {
   gap: 1.5rem;
 }
 
-/* 3. STATISTICS — 필터 카드 & 데이터 테이블 */
+/* =========================================
+   3. STATISTICS — 탭, 필터 카드, 핵심 지표 & 데이터 테이블
+   ========================================= */
+.stats-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.stats-tabs {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.stats-tab {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  padding: 0.65rem 1.6rem;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.stats-tab:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.stats-tab.active {
+  background: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+  color: #0b111a;
+  box-shadow: 0 0 14px rgba(0, 229, 255, 0.4);
+}
+
+/* gol.gg 바로가기 버튼 */
+.gol-shortcut-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 1.25rem;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  color: #e2e8f0;
+  text-decoration: none;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(8px);
+  transition: var(--transition);
+}
+
+.gol-shortcut-btn:hover {
+  background: rgba(0, 229, 255, 0.12);
+  border-color: var(--accent-cyan);
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(0, 229, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.gol-badge-text {
+  color: var(--accent-cyan);
+  font-weight: 800;
+}
+
+.stats-tab-content {
+  display: none;
+}
+
+.stats-tab-content.active {
+  display: block;
+}
+
+/* 필터 카드 영역: 항목들이 카드를 채울 수 있도록 간격 조절 */
 .stats-filter-card {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 18px;
-  padding: 1.8rem 2.2rem;
+  padding: 1.6rem 2.2rem;
   margin-bottom: 2.2rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  align-items: center;
+  display: flex;
+  justify-content: space-between; /* 양 끝 및 항목 간 여백을 채워 카드를 알차게 배치 */
+  align-items: flex-end;
+  gap: 1.8rem;
   backdrop-filter: blur(10px);
 }
 
 .filter-group {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 0.65rem;
+}
+
+.filter-group-season {
+  flex: 0 0 auto;
+}
+
+/* Tournament와 Champion 드롭다운이 남은 공간을 균등하게 채움 */
+.filter-group-select {
+  flex: 1 1 240px;
+  max-width: 320px;
+}
+
+@media (max-width: 900px) {
+  .stats-filter-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .filter-group-select {
+    max-width: 100%;
+    width: 100%;
+  }
 }
 
 .filter-label {
@@ -366,19 +888,26 @@ body {
   gap: 0.5rem;
 }
 
+/* Season 항목들이 한 줄에 깔끔하게 표시되도록 설정 */
 .season-btn-group {
   display: flex;
   gap: 0.5rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .season-filter-btn {
   font-family: 'Outfit', sans-serif;
   font-size: 0.85rem;
   font-weight: 700;
-  padding: 0.55rem 1.1rem;
+  padding: 0.6rem 1.15rem;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+}
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--text-muted);
   cursor: pointer;
@@ -430,12 +959,24 @@ body {
   padding: 0.5rem;
 }
 
-/* 핵심 스탯 요약 그리드 */
+/* 핵심 스탯 요약 그리드: 각 카드의 가로 너비와 카드 간 간격을 균일하게 (1줄 4개, 2줄 8개) */
 .stats-overview-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.2rem;
   margin-bottom: 2.5rem;
+}
+
+@media (max-width: 992px) {
+  .stats-overview-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .stats-overview-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .stat-box {
@@ -447,6 +988,7 @@ body {
   flex-direction: column;
   gap: 0.4rem;
   transition: var(--transition);
+  min-width: 0; /* flex/grid 오버플로 방지 */
 }
 
 .stat-box:hover {
@@ -461,6 +1003,7 @@ body {
   font-weight: 900;
   color: var(--accent-cyan);
   line-height: 1.1;
+  white-space: nowrap;
 }
 
 .stat-name {
@@ -468,6 +1011,7 @@ body {
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.5px;
+  white-space: nowrap; /* MATCH RECORD (승-패) 등 글자 줄바꿈 방지 */
 }
 
 /* 챔피언 테이블 카드 */
@@ -570,6 +1114,45 @@ body {
 .winrate-low {
   color: #f87171;
   font-weight: 600;
+}
+
+/* Match Result 전용 스타일 */
+.match-list-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.match-list-subdesc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.match-result-badge {
+  display: inline-block;
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.badge-win {
+  background: rgba(0, 229, 255, 0.15);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(0, 229, 255, 0.4);
+}
+
+.badge-loss {
+  background: rgba(248, 113, 113, 0.12);
+  color: #f87171;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+.match-data-table td {
+  padding: 0.85rem 1rem;
+  font-size: 0.92rem;
 }
 
 .text-left { text-align: left; }
@@ -1075,6 +1658,11 @@ body {
 
   .info-value {
     font-size: 1.1rem;
+  }
+
+  .career-top-row {
+    grid-template-columns: 1fr;
+    gap: 3rem;
   }
 }
 

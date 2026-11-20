@@ -4,142 +4,280 @@ document.addEventListener('DOMContentLoaded', () => {
   const pageViews = document.querySelectorAll('.page-view');
 
   // ==========================================
-  // [0] STATISTICS 메뉴 로직 (Season 다중/ALL 필터 + Tournament 단일 필터 + gol.gg 데이터)
+  // [0] STATISTICS 메뉴 로직 (탭 + Season 다중/ALL + Tournament + Champion 필터 + gol.gg 데이터 + Match Result)
   // ==========================================
+  const statsTabs = document.querySelectorAll('.stats-tab');
+  const statsTabContents = document.querySelectorAll('.stats-tab-content');
   const seasonFilterGroup = document.getElementById('seasonFilterGroup');
   const tournamentFilterSelect = document.getElementById('tournamentFilterSelect');
+  const championFilterSelect = document.getElementById('championFilterSelect');
   const statsOverviewGrid = document.getElementById('statsOverviewGrid');
   const championStatsTbody = document.getElementById('championStatsTbody');
   const activeFilterBadge = document.getElementById('activeFilterBadge');
 
-  // 필터 상태:
-  // selectedSeasons: ['ALL'] 또는 ['2023'], ['2023', '2025'] 등 다중 선택
+  // Match Result 탭 요소
+  const matchSeasonFilterGroup = document.getElementById('matchSeasonFilterGroup');
+  const matchTournamentFilterSelect = document.getElementById('matchTournamentFilterSelect');
+  const matchChampionFilterSelect = document.getElementById('matchChampionFilterSelect');
+  const matchListTbody = document.getElementById('matchListTbody');
+  const matchActiveFilterBadge = document.getElementById('matchActiveFilterBadge');
+
+  // 필터 상태: 두 탭이 동일한 필터 상태를 공유하여 동기화
   let selectedSeasons = ['ALL'];
-  // selectedTournament: 'ALL' 또는 'LCK CL 2026 Rounds 3-4' 등 단일 선택
   let selectedTournament = 'ALL';
+  let selectedChampion = 'ALL';
 
   function initStatistics() {
     if (!seasonFilterGroup || !tournamentFilterSelect || typeof golStatsDatabase === 'undefined') return;
 
-    // 1. Season 버튼 클릭 이벤트
-    const seasonBtns = seasonFilterGroup.querySelectorAll('.season-filter-btn');
-    seasonBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const season = btn.getAttribute('data-season');
+    // 0. Statistics 상단 탭 전환 이벤트 (Summary vs Match Result)
+    statsTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const targetTab = tab.getAttribute('data-stats-tab');
+        statsTabs.forEach(t => t.classList.remove('active'));
+        statsTabContents.forEach(c => c.classList.remove('active'));
 
-        if (season === 'ALL') {
-          // ALL을 선택할 때에는 다른 선택항목들이 선택 해제됨
-          selectedSeasons = ['ALL'];
-        } else {
-          // 특정 시즌(2023, 2025, 2026)을 선택한 경우
-          if (selectedSeasons.includes('ALL')) {
-            selectedSeasons = [season];
-          } else {
-            if (selectedSeasons.includes(season)) {
-              // 이미 선택되어 있으면 토글 해제
-              selectedSeasons = selectedSeasons.filter(s => s !== season);
-              if (selectedSeasons.length === 0) {
-                selectedSeasons = ['ALL']; // 아무것도 안 남으면 ALL로 복귀
-              }
-            } else {
-              // 중복 추가 선택
-              selectedSeasons.push(season);
-            }
-          }
+        tab.classList.add('active');
+        const targetContent = document.getElementById(`statsTabContent-${targetTab}`);
+        if (targetContent) targetContent.classList.add('active');
+
+        if (targetTab === 'match-result') {
+          renderMatchResultList();
         }
-
-        // Season 필터를 누르면 상호 필터 일관성을 위해 Tournament는 ALL로 리셋 (또는 선택 유지)
-        updateSeasonBtnStyles();
-        renderStatistics();
       });
     });
 
-    // 2. Tournament 드롭다운 이벤트 (단일 선택)
-    tournamentFilterSelect.addEventListener('change', (e) => {
-      selectedTournament = e.target.value;
-      renderStatistics();
+    // 1. Season 버튼 클릭 이벤트 핸들러 생성
+    function setupSeasonButtons(groupEl) {
+      if (!groupEl) return;
+      const btns = groupEl.querySelectorAll('.season-filter-btn');
+      btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const season = btn.getAttribute('data-season');
+          if (season === 'ALL') {
+            selectedSeasons = ['ALL'];
+          } else {
+            if (selectedSeasons.includes('ALL')) {
+              selectedSeasons = [season];
+            } else {
+              if (selectedSeasons.includes(season)) {
+                selectedSeasons = selectedSeasons.filter(s => s !== season);
+                if (selectedSeasons.length === 0) selectedSeasons = ['ALL'];
+              } else {
+                selectedSeasons.push(season);
+              }
+            }
+          }
+          syncAllFilters();
+        });
+      });
+    }
+
+    setupSeasonButtons(seasonFilterGroup);
+    setupSeasonButtons(matchSeasonFilterGroup);
+
+    // 2. Tournament 드롭다운 이벤트 (양방향 동기화)
+    if (tournamentFilterSelect) {
+      tournamentFilterSelect.addEventListener('change', (e) => {
+        selectedTournament = e.target.value;
+        syncAllFilters();
+      });
+    }
+    if (matchTournamentFilterSelect) {
+      matchTournamentFilterSelect.addEventListener('change', (e) => {
+        selectedTournament = e.target.value;
+        syncAllFilters();
+      });
+    }
+
+    // 3. Champion 드롭다운 이벤트 (양방향 동기화)
+    if (championFilterSelect) {
+      championFilterSelect.addEventListener('change', (e) => {
+        selectedChampion = e.target.value;
+        syncAllFilters();
+      });
+    }
+    if (matchChampionFilterSelect) {
+      matchChampionFilterSelect.addEventListener('change', (e) => {
+        selectedChampion = e.target.value;
+        syncAllFilters();
+      });
+    }
+
+    syncAllFilters();
+  }
+
+  // 필터 변경 시 모든 드롭다운/버튼 및 화면 렌더링 동기화
+  function syncAllFilters() {
+    updateSeasonBtnStyles();
+    populateChampionDropdown();
+    renderStatistics();
+    renderMatchResultList();
+  }
+
+  // 챔피언 드롭다운 옵션 알파벳 순 동적 채우기 (양쪽 드롭다운 모두 동기화)
+  function populateChampionDropdown() {
+    const baseData = getBaseDataset();
+    const champs = baseData.champions || [];
+
+    // 알파벳 순서(A-Z)로 고유 챔피언 이름 추출 및 정렬
+    const champNames = Array.from(new Set(champs.map(c => c.name))).sort((a, b) => a.localeCompare(b));
+    const currentVal = selectedChampion;
+    const optionsHtml = `<option value="ALL">ALL (전체 챔피언)</option>` +
+      champNames.map(name => `<option value="${name}">${name}</option>`).join('');
+
+    [championFilterSelect, matchChampionFilterSelect].forEach(sel => {
+      if (sel) {
+        sel.innerHTML = optionsHtml;
+        if (champNames.includes(currentVal)) {
+          sel.value = currentVal;
+        } else {
+          sel.value = 'ALL';
+        }
+      }
     });
 
-    updateSeasonBtnStyles();
-    renderStatistics();
+    if (champNames.includes(currentVal)) {
+      selectedChampion = currentVal;
+    } else {
+      selectedChampion = 'ALL';
+    }
+
+    // 토너먼트 셀렉트도 값 동기화
+    [tournamentFilterSelect, matchTournamentFilterSelect].forEach(sel => {
+      if (sel) sel.value = selectedTournament;
+    });
   }
 
   function updateSeasonBtnStyles() {
-    if (!seasonFilterGroup) return;
-    const seasonBtns = seasonFilterGroup.querySelectorAll('.season-filter-btn');
-    seasonBtns.forEach(btn => {
-      const s = btn.getAttribute('data-season');
-      if (selectedSeasons.includes(s)) {
-        btn.classList.add('active');
-      } else {
-        btn.classList.remove('active');
-      }
+    [seasonFilterGroup, matchSeasonFilterGroup].forEach(group => {
+      if (!group) return;
+      const seasonBtns = group.querySelectorAll('.season-filter-btn');
+      seasonBtns.forEach(btn => {
+        const s = btn.getAttribute('data-season');
+        if (selectedSeasons.includes(s)) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
     });
   }
 
-  // 3. 통계 데이터 계산 및 화면 렌더링
+  // 현재 필터(시즌/토너먼트)에 맞는 기본 데이터셋 가져오기
+  function getBaseDataset() {
+    if (selectedTournament !== 'ALL' && golStatsDatabase.tournaments[selectedTournament]) {
+      return golStatsDatabase.tournaments[selectedTournament];
+    }
+
+    if (selectedSeasons.includes('ALL') || selectedSeasons.length === 3) {
+      return golStatsDatabase.seasons['ALL'] || {};
+    } else if (selectedSeasons.length === 1) {
+      const s = selectedSeasons[0];
+      return golStatsDatabase.seasons[s] || golStatsDatabase.seasons['ALL'] || {};
+    } else {
+      return aggregateSeasons(selectedSeasons);
+    }
+  }
+
+  // 4. 통계 데이터 계산 및 화면 렌더링
   function renderStatistics() {
     if (!statsOverviewGrid || !championStatsTbody || typeof golStatsDatabase === 'undefined') return;
 
-    let displayData = null;
+    let displayData = getBaseDataset();
     let badgeText = '';
 
-    // 토너먼트가 특정 토너먼트인 경우 해당 토너먼트 데이터 우선
-    if (selectedTournament !== 'ALL' && golStatsDatabase.tournaments[selectedTournament]) {
-      displayData = golStatsDatabase.tournaments[selectedTournament];
+    if (selectedTournament !== 'ALL') {
       badgeText = `Tournament: ${selectedTournament}`;
+    } else if (selectedSeasons.includes('ALL') || selectedSeasons.length === 3) {
+      badgeText = 'Season: ALL (2023, 2025, 2026)';
+    } else if (selectedSeasons.length === 1) {
+      const s = selectedSeasons[0];
+      const sLabel = s === '2023' ? '2023 (S13)' : s === '2025' ? '2025 (S15)' : '2026 (S16)';
+      badgeText = `Season: ${sLabel}`;
     } else {
-      // Season 필터 적용
-      if (selectedSeasons.includes('ALL') || selectedSeasons.length === 3) {
-        displayData = golStatsDatabase.seasons['ALL'];
-        badgeText = 'Season: ALL (2023, 2025, 2026)';
-      } else if (selectedSeasons.length === 1) {
-        const s = selectedSeasons[0];
-        displayData = golStatsDatabase.seasons[s] || golStatsDatabase.seasons['ALL'];
-        const sLabel = s === '2023' ? '2023 (S13)' : s === '2025' ? '2025 (S15)' : '2026 (S16)';
-        badgeText = `Season: ${sLabel}`;
-      } else {
-        // 복수 시즌 선택 (예: 2023 + 2026) -> 선택된 시즌들 데이터 합산 집계
-        displayData = aggregateSeasons(selectedSeasons);
-        badgeText = `Season: ${selectedSeasons.join(', ')}`;
-      }
+      badgeText = `Season: ${selectedSeasons.join(', ')}`;
+    }
+
+    if (selectedChampion !== 'ALL') {
+      badgeText += ` | Champion: ${selectedChampion}`;
     }
 
     if (activeFilterBadge) {
       activeFilterBadge.textContent = badgeText;
     }
 
-    // 4. 핵심 지표 그리드 출력
+    // 챔피언 필터가 특정 챔피언일 때 요약 지표와 테이블을 해당 챔피언에 맞춤
+    const allChamps = displayData.champions || [];
+    let filteredChamps = allChamps;
+
+    let summaryRecord = displayData.record || '74W - 146L';
+    let summaryWinRate = displayData.winRate || '33.6%';
+    let summaryKda = displayData.kda || '2.4';
+    let summaryDpm = displayData.dpm || '525.1';
+    let summaryGpm = displayData.gpm || '371';
+    let summaryKp = displayData.kp || '53.4%';
+    let summaryCsm = displayData.csm || '8.0';
+    let summarySoloKills = displayData.soloKills || '58';
+
+    if (selectedChampion !== 'ALL') {
+      filteredChamps = allChamps.filter(c => c.name === selectedChampion);
+      if (filteredChamps.length > 0) {
+        const targetChamp = filteredChamps[0];
+        const g = targetChamp.games || 0;
+        const wrNum = parseFloat(targetChamp.winRate) || 0;
+        const wins = Math.round(g * (wrNum / 100));
+        const losses = g - wins;
+        summaryRecord = `${wins}W - ${losses}L`;
+        summaryWinRate = targetChamp.winRate || '0%';
+        summaryKda = targetChamp.kda || '-';
+      } else {
+        summaryRecord = '0W - 0L';
+        summaryWinRate = '0%';
+        summaryKda = '-';
+      }
+    }
+
+    // 5. 핵심 지표 그리드 출력 (요청 순서 및 명칭 정확히 반영)
+    // 1행: MATCH RECORD (승-패), WIN RATE (승률), KDA, DPM (분당 데미지), GPM (골드 당 데미지)
+    // 2행: Kill Participation (킬 관여율), CSM (분당 CS), SOLO KILLS
     statsOverviewGrid.innerHTML = `
       <div class="stat-box">
-        <span class="stat-number">${displayData.record || '74W - 146L'}</span>
+        <span class="stat-number">${summaryRecord}</span>
         <span class="stat-name">MATCH RECORD (승-패)</span>
       </div>
       <div class="stat-box">
-        <span class="stat-number">${displayData.winRate || '33.6%'}</span>
+        <span class="stat-number">${summaryWinRate}</span>
         <span class="stat-name">WIN RATE (승률)</span>
       </div>
       <div class="stat-box">
-        <span class="stat-number">${displayData.kda || '2.4'}</span>
-        <span class="stat-name">KDA RATIO</span>
+        <span class="stat-number">${summaryKda}</span>
+        <span class="stat-name">KDA</span>
       </div>
       <div class="stat-box">
-        <span class="stat-number">${displayData.dpm || '525.1'}</span>
-        <span class="stat-name">DPM (분당 대미지)</span>
+        <span class="stat-number">${summaryDpm}</span>
+        <span class="stat-name">DPM (분당 데미지)</span>
       </div>
       <div class="stat-box">
-        <span class="stat-number">${displayData.csm || '8.0'}</span>
+        <span class="stat-number">${summaryGpm}</span>
+        <span class="stat-name">GPM (골드 당 데미지)</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-number">${summaryKp}</span>
+        <span class="stat-name">Kill Participation (킬 관여율)</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-number">${summaryCsm}</span>
         <span class="stat-name">CSM (분당 CS)</span>
       </div>
       <div class="stat-box">
-        <span class="stat-number">${displayData.soloKills || '58'}</span>
-        <span class="stat-name">SOLO KILLS</span>
+        <span class="stat-number">${summarySoloKills}</span>
+        <span class="stat-name">SOLO KILLS (솔로 킬)</span>
       </div>
     `;
 
-    // 5. 챔피언 풀 테이블 출력
-    const champs = displayData.champions || [];
-    if (champs.length === 0) {
+    // 6. 챔피언 풀 테이블 출력
+    if (filteredChamps.length === 0) {
       championStatsTbody.innerHTML = `
         <tr>
           <td colspan="4" class="text-center" style="padding: 2rem; color: var(--text-muted);">
@@ -151,16 +289,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 경기 수 기준 내림차순 정렬
-    const sortedChamps = [...champs].sort((a, b) => (b.games || 0) - (a.games || 0));
+    const sortedChamps = [...filteredChamps].sort((a, b) => (b.games || 0) - (a.games || 0));
 
     championStatsTbody.innerHTML = sortedChamps.map(champ => {
-      // 승률 색상 클래스
       const wrNum = parseFloat(champ.winRate) || 0;
       let wrClass = 'winrate-mid';
       if (wrNum >= 50) wrClass = 'winrate-high';
       else if (wrNum < 30) wrClass = 'winrate-low';
 
-      // 롤 공식 챔피언 아이콘 CDN
       const champCleanName = champ.name.replace(/[^a-zA-Z0-9]/g, '');
       const iconUrl = `https://ddragon.leagueoflegends.com/cdn/14.23.1/img/champion/${champCleanName}.png`;
 
@@ -238,6 +374,72 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
+
+  // Match Result 탭의 Last 200 games 목록 렌더링
+  function renderMatchResultList() {
+    if (!matchListTbody || typeof golMatchDatabase === 'undefined') return;
+
+    let matches = golMatchDatabase;
+
+    // 1. Season 필터 적용
+    if (!selectedSeasons.includes('ALL') && selectedSeasons.length < 3) {
+      matches = matches.filter(m => selectedSeasons.includes(m.season));
+    }
+
+    // 2. Tournament 필터 적용
+    if (selectedTournament !== 'ALL') {
+      matches = matches.filter(m => m.tournament === selectedTournament);
+    }
+
+    // 3. Champion 필터 적용
+    if (selectedChampion !== 'ALL') {
+      matches = matches.filter(m => m.champion.toLowerCase() === selectedChampion.toLowerCase());
+    }
+
+    if (matchActiveFilterBadge) {
+      matchActiveFilterBadge.textContent = `Matches: ${matches.length} Games`;
+    }
+
+    if (matches.length === 0) {
+      matchListTbody.innerHTML = `
+        <tr>
+          <td colspan="10" class="text-center" style="padding: 2.5rem; color: var(--text-muted);">
+            해당 조건의 경기 기록이 없습니다.
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    matchListTbody.innerHTML = matches.map(match => {
+      const champCleanName = match.champion.replace(/[^a-zA-Z0-9]/g, '');
+      const iconUrl = `https://ddragon.leagueoflegends.com/cdn/14.23.1/img/champion/${champCleanName}.png`;
+      const isWin = match.result === 'WIN';
+      const resultBadge = isWin
+        ? `<span class="match-result-badge badge-win">WIN</span>`
+        : `<span class="match-result-badge badge-loss">LOSS</span>`;
+
+      return `
+        <tr>
+          <td class="text-left">
+            <div class="champion-cell">
+              <img src="${iconUrl}" alt="${match.champion}" class="champ-avatar-small" onerror="this.src='profile_placeholder.svg'">
+              <span>${match.champion}</span>
+            </div>
+          </td>
+          <td class="text-center">${resultBadge}</td>
+          <td class="text-center" style="font-weight: 700; color: #ffffff;">${match.kda}</td>
+          <td class="text-center" style="font-weight: 600; color: var(--accent-cyan);">${match.game}</td>
+          <td class="text-center" style="color: var(--text-muted); font-size: 0.88rem;">${match.tournament}</td>
+          <td class="text-center">${match.duration}</td>
+          <td class="text-center">${match.csm}</td>
+          <td class="text-center">${match.dpm}</td>
+          <td class="text-center">${match.kp}</td>
+          <td class="text-center" style="color: var(--text-muted); font-size: 0.88rem;">${match.date}</td>
+        </tr>
+      `;
+    }).join('');
+  }
 
   // ==========================================
   // [1] VIDEOS 메뉴 로직 (탭 필터링 + 리스트 + 상세 페이지)
@@ -525,9 +727,14 @@ document.addEventListener('DOMContentLoaded', () => {
       videoListContainer.style.display = 'block';
     }
 
-    if (targetId === 'news' && newsListContainer && newsDetailContainer) {
-      newsDetailContainer.style.display = 'none';
-      newsListContainer.style.display = 'block';
+    // NEWS 메뉴로 이동할 경우 상세 페이지를 닫고 리스트 뷰를 디폴트로 표시
+    if (targetId === 'news') {
+      if (newsListContainer && newsDetailContainer) {
+        newsDetailContainer.style.display = 'none';
+        newsListContainer.style.display = 'block';
+      }
+      // 메뉴 전환 시 항상 최신 뉴스를 다시 한번 보증 렌더링
+      try { renderNewsList(); } catch (e) { console.error(e); }
     }
 
     const targetView = document.getElementById(`view-${targetId}`);
@@ -572,13 +779,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // 초기 렌더링
-  initStatistics();
-  renderVideos();
-  renderNewsList();
+  // 초기 렌더링 (안전한 독립 실행)
+  try { initStatistics(); } catch (e) { console.error("Statistics Init Error:", e); }
+  try { renderVideos(); } catch (e) { console.error("Videos Render Error:", e); }
+  try { renderNewsList(); } catch (e) { console.error("News Render Error:", e); }
 
   const initialHash = window.location.hash.replace('#', '');
   if (initialHash && document.getElementById(`view-${initialHash}`)) {
     switchPage(initialHash);
+  } else {
+    switchPage('home');
   }
 });
