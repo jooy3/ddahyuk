@@ -13,9 +13,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-  <!-- Header / Navigation: GNB 좌측 상단 필기체 로고 + 1depth 메뉴 -->
+  <!-- Header / Navigation: GNB 좌측 상단 로고 이미지 + 1depth 메뉴 -->
   <header class="header">
-    <a href="#" class="brand-logo" id="homeLogo" title="Home으로 이동">DDahyuk</a>
+    <a href="#" class="brand-logo" id="homeLogo" title="Home으로 이동">
+      <img src="logo_dda.png" alt="DDahyuk Logo" class="brand-logo-img">
+    </a>
     
     <nav class="gnb-nav">
       <ul class="gnb-list">
@@ -250,6 +252,15 @@
               </h3>
             </div>
             <div class="record-groups-list">
+              <div class="record-group">
+                <span class="record-year-badge badge-awards">2025</span>
+                <ul class="record-items">
+                  <li>
+                    <div class="award-text">2025 LCK Academy Series 3월 오픈 토너먼트 우승</div>
+                    <span class="record-team team-subline">(TPA Management)</span>
+                  </li>
+                </ul>
+              </div>
               <div class="record-group">
                 <span class="record-year-badge badge-awards">2022</span>
                 <ul class="record-items">
@@ -518,7 +529,8 @@
               src=""
               title="DDahyuk Video"
               frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
               allowfullscreen
             ></iframe>
           </div>
@@ -581,6 +593,10 @@
       </div>
       <div class="contact-box">
         <div class="contact-row">
+          <span class="contact-label">Discord</span>
+          <span class="contact-val">ddahyuk</span>
+        </div>
+        <div class="contact-row">
           <span class="contact-label">Email</span>
           <span class="contact-val"><a href="mailto:ddahyuklol@gmail.com">ddahyuklol@gmail.com</a></span>
         </div>
@@ -591,6 +607,10 @@
         <div class="contact-row">
           <span class="contact-label">SOOP</span>
           <span class="contact-val"><a href="https://www.sooplive.com/station/minhyuk0904" target="_blank" rel="noopener noreferrer">sooplive.com/station/minhyuk0904</a></span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-label">Agency</span>
+          <span class="contact-val"><a href="https://shadowcorp.kr/" target="_blank" rel="noopener noreferrer">Shadow Corporation</a></span>
         </div>
       </div>
     </section>

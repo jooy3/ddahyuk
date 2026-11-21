@@ -510,8 +510,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (videoDetailCategory) videoDetailCategory.textContent = video.category;
     if (videoDetailTitle) videoDetailTitle.textContent = video.title;
-    if (videoDetailDate) videoDetailDate.textContent = (video.date && video.date.length >= 16) ? video.date.substring(0, 16) : video.displayDate;
-    if (videoDetailIframe) videoDetailIframe.src = video.videoUrl;
+    if (videoDetailDate) videoDetailDate.textContent = (video.date && video.date.length >= 16) ? video.date.substring(0, 16) : (video.displayDate || '');
+    
+    // 유튜브 임베드 자동 재생 파라미터 적용 (autoplay=1, enablejsapi=1)
+    if (videoDetailIframe) {
+      const videoIdParam = video.videoId || '';
+      if (videoIdParam) {
+        videoDetailIframe.src = `https://www.youtube.com/embed/${videoIdParam}?autoplay=1&rel=0&enablejsapi=1`;
+      } else {
+        const separator = (video.videoUrl && video.videoUrl.includes('?')) ? '&' : '?';
+        videoDetailIframe.src = `${video.videoUrl}${separator}autoplay=1&rel=0&enablejsapi=1`;
+      }
+    }
 
     if (videoListContainer && videoDetailContainer) {
       videoListContainer.style.display = 'none';

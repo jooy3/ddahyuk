@@ -29,25 +29,33 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.8rem 4rem 1rem 4rem;
+  padding: 1.4rem 4rem 0.8rem 4rem;
   position: relative;
   z-index: 100;
 }
 
 .brand-logo {
-  font-family: 'Dancing Script', 'Great Vibes', cursive;
-  font-size: 2.3rem;
-  font-weight: 700;
-  color: #ffffff;
+  display: flex;
+  align-items: center;
   text-decoration: none;
   cursor: pointer;
   transition: var(--transition);
   user-select: none;
+  padding: 0;
 }
 
-.brand-logo:hover {
-  color: var(--accent-cyan);
-  text-shadow: 0 0 14px rgba(0, 229, 255, 0.5);
+.brand-logo-img {
+  height: 64px; /* 기존 48px에서 더 큼직하고 또렷하게 확대 */
+  width: auto;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.25s ease, filter 0.25s ease;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.25));
+}
+
+.brand-logo:hover .brand-logo-img {
+  transform: scale(1.06);
+  filter: drop-shadow(0 0 14px rgba(0, 229, 255, 0.7)) brightness(1.15);
 }
 
 /* GNB Navigation */
@@ -541,18 +549,28 @@ body {
   width: 100%;
 }
 
-/* 1행: 좌측 Team History, 우측 Awards (2열 그리드) */
+/* 1행: 좌측 Team History, 우측 Awards (2열 그리드) - 하단 끝 정렬을 위해 stretch 적용 */
 .career-top-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem; /* 좌우 열 간격 */
-  align-items: start;
+  align-items: stretch;
 }
 
 .career-block {
   display: flex;
   flex-direction: column;
   gap: 1.8rem;
+}
+
+.career-block-team {
+  height: 100%;
+}
+
+.career-block-team .timeline-list {
+  flex: 1;
+  justify-content: space-between; /* Awards 카드의 전체 높이에 맞춰 항목 간 간격을 균등하게 넓혀 하단 끝 일치 */
+  padding-bottom: 0.5rem;
 }
 
 .career-block-header {
@@ -1602,6 +1620,13 @@ body {
   font-weight: 700;
   font-size: 1.1rem;
   color: #fff;
+}
+
+.contact-val {
+  color: var(--accent-cyan);
+  font-size: 1.05rem;
+  font-family: 'Outfit', 'Pretendard', sans-serif;
+  font-weight: 600;
 }
 
 .contact-val a {
